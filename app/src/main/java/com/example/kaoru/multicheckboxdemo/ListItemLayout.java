@@ -16,7 +16,6 @@ public class ListItemLayout extends ViewGroup {
     private final static float BASE_WIDTH = 640, BASE_HEIGHT = 120;
     private float mScaleFactor = 1;
     private CheckBox mCheckBox;
-    private TextView mTextView;
 
     public ListItemLayout(Context context) {
         super(context);
@@ -35,7 +34,6 @@ public class ListItemLayout extends ViewGroup {
         super.onFinishInflate();
 
         mCheckBox = (CheckBox) findViewById(R.id.checkbox);
-        mTextView = (TextView) findViewById(R.id.text);
     }
 
     @Override
@@ -47,18 +45,11 @@ public class ListItemLayout extends ViewGroup {
         setMeasuredDimension(w, h);
 
         measureCheckbox(mCheckBox, w, h, mScaleFactor);
-        measureTextView(mTextView, w, h, mScaleFactor);
-    }
-
-    private void measureTextView(View view, int w, int h, float scaleFactor) {
-        view.measure(
-                MeasureSpec.makeMeasureSpec(w - h, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(h, MeasureSpec.EXACTLY));
     }
 
     private void measureCheckbox(View view, int w, int h, float scaleFactor) {
         view.measure(
-                MeasureSpec.makeMeasureSpec(h, MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(w, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(h, MeasureSpec.EXACTLY));
     }
 
@@ -66,11 +57,6 @@ public class ListItemLayout extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         layoutCheckbox(mCheckBox);
-        layoutTextView(mTextView);
-    }
-
-    private void layoutTextView(View view) {
-        view.layout(mCheckBox.getRight(), 0, mCheckBox.getRight() + view.getMeasuredWidth(), view.getMeasuredHeight());
     }
 
     private void layoutCheckbox(View view) {
